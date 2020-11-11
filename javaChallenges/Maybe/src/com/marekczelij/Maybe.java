@@ -20,22 +20,12 @@ public class Maybe<T> {
     }
 
     public <R> Maybe<R> map(Function<T,R> func){
-        if(isPresent()){
-//            R r = func.apply(x);
-            return of(func.apply(x));
-        }
-        return new Maybe<>(null);
+        return isPresent()? of(func.apply(x)) : new Maybe<>();
     }
 
     public T get(){
-//        try {
         if(isPresent()) return x;
         throw new NoSuchElementException("Maybe is empty");
-//        } catch ( NoSuchElementException e){
-//            e.printStackTrace();
-//            System.out.println("NoSuchElementException");
-//        }
-//        return null;
     }
 
     boolean isPresent() {return x!=null && !x.equals(null);}
@@ -45,9 +35,6 @@ public class Maybe<T> {
     }
 
      Maybe<T> filter(Predicate<T> pred){
-        if(pred.equals(x) || !isPresent()){
-            System.out.println("XDXD");
-        }
         return pred.test(x) || !isPresent()? this : new Maybe<>();
     }
 
